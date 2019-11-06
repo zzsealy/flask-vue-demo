@@ -1,22 +1,24 @@
 from flask import Flask
-from flask_vue.extends import cors, sqlalchemy, migrate
+from flask_vue.extends import cors, db, migrate
+from flask_vue.modles import User
 from config import Config
 from flask_vue.api import bp as api_bp
-from flask_sqlalchemy import SQLAlchemy 
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)
     config_app(app, config_class)
     register_extends(app)
     register_blueprint(app)
+    register_shell_context(app)
     # 注册蓝本
     return app
 
 
 def register_extends(app):
     cors.init_app(app)
-    sqlalchemy.init_app(app)
-    migrate.init_app(app)
+    db.init_app(app)
+    migrate.init_app(app, db)
 
 
 def register_blueprint(app):
@@ -25,3 +27,11 @@ def register_blueprint(app):
 
 def config_app(app, config_class):
     app.config.from_object(config_class)
+
+def register_shell_context(app):
+    @app.shell_context_processor
+    def make_shell_context():
+        return dict(db=db, User=User)
+    
+
+from flask_vue import modles

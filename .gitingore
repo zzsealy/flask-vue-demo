@@ -3,4 +3,5 @@ __pycache__/
 .flaskenv
 app.db
 madblog.log*
+.vscode/
 
