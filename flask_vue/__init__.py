@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_vue.extends import cors, db, migrate
-from flask_vue.modles import User
+from flask_vue.models import User
 from config import Config
 from flask_vue.api import bp as api_bp
 
@@ -34,4 +34,4 @@ def register_shell_context(app):
         return dict(db=db, User=User)
     
 
-from flask_vue import modles
+from flask_vue import models
