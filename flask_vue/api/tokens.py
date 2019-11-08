@@ -15,11 +15,11 @@ from flask_vue.api.auth import basic_auth, token_auth
 def get_token():
     token = g.current_user.get_token()
     db.session.commit()
-    return jsonify(dict(token=token))
+    return jsonify({'token': token})
 
 @bp.route('/tokens', methods=['DELETE'])
-@basic_auth.login_required
+@token_auth.login_required
 def remove_token():
-    g.current_user.remove_token()
+    g.current_user.remove_token() # 先进行了remove_token, 然后调用login_required进行验证
     db.session.commit()
     return '',204

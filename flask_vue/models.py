@@ -73,15 +73,15 @@ class User(PaginatedAPIMixin, db.Model):
         self.token = base64.b64encode(os.urandom(24)).decode('utf-8')
         self.token_expiration = now + timedelta(seconds=expires_in)
         db.session.add(self)
-        return self.token
+        return self.token   
     
-    def remove_token(self): # 设置过期时间为上一秒
+    def remove_token(self):
         self.token_expiration = datetime.utcnow() - timedelta(seconds=1)
 
     @staticmethod
     def check_token(token):
         user = User.query.filter_by(token=token).first()
-        if user is None and user.token_expiration < datetime.utcnow():
+        if user is None or user.token_expiration < datetime.utcnow():
             return None
         return user
     
