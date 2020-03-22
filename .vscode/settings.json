@@ -1,8 +1,0 @@
-{
-    "git.ignoreLimitWarning": true,
-    "python.venvPath": "/Users/dairuiquan/.local/share/virtualenvs",
-    "python.venvFolders": [
-        "flask-vue-demo-oDg3xP2G"
-    ],
-    "python.pythonPath": "/Users/dairuiquan/.local/share/virtualenvs/flask-vue-demo-oDg3xP2G/bin/python"
-}
