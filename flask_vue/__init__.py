@@ -9,9 +9,8 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     config_app(app, config_class)
     register_extends(app)
-    register_blueprint(app)
+    register_blueprint(app) # 注册蓝本
     register_shell_context(app)
-    # 注册蓝本
     return app
 
 
@@ -28,6 +27,7 @@ def register_blueprint(app):
 def config_app(app, config_class):
     app.config.from_object(config_class)
 
+# 注册上下文
 def register_shell_context(app):
     @app.shell_context_processor
     def make_shell_context():

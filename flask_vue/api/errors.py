@@ -7,7 +7,7 @@ def error_response(status_code, message=None):
     payload = {'error': HTTP_STATUS_CODES.get(status_code, 'Unknow error')}
     if message:
         payload['message'] = message
-    response = jsonify(payload)
+    response = jsonify(payload)  # 这只是一个简单的字典
     response.status_code = status_code
     return response
 
