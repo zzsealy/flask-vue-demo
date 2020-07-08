@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 
 Vue.config.productionTip = false
 
+
 // 全局前置守卫 实现路由的meta.title  
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {
@@ -14,6 +15,7 @@ router.beforeEach((to, from, next) => {
   }
   next()
 })
+
 
 /* eslint-disable no-new */
 new Vue({
