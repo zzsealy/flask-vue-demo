@@ -5,6 +5,7 @@ import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Profile from '@/components/Profile'
 import Ping from '@/components/Ping'
+import EditProfile from '@/components/EditProfile'
 
 Vue.use(Router)
 
@@ -29,12 +30,21 @@ const router = new Router({
       component: Register,
     },
     {
-      path: '/profile',
+      path: '/user/:id',
       name: 'Profile',
       component: Profile,
       meta: {
         requiresAuth: true   //  这个值设置为true 代表需要身份验证。
       }
+    },
+    {
+       // 用户修改自己的个人信息
+       path: '/edit-profile',
+       name: 'EditProfile',
+       component: EditProfile,
+       meta: {
+         requiresAuth: true
+       }
     },
     {
       path: '/ping',

@@ -1,0 +1,7 @@
+用户认证修改为 JWT（JSON Web Token），
+后端使用 pyjwt 库生成 JWT 并验证合法性；前端使用 JSON.parse 解析 JWT 中的 payload 数据。
+提示消息改用 vue-toasted 插件，方便好用。前端每次访问 API 都需要附带 Token 到 Authorization 请求头中，
+使用请求拦截器自动添加进去，另外设置了响应拦截器，自动处理 401 和 404 错误。用户头像使用在线的 Gravatar 服务，
+前端使用 moment.js 格式化时间。个人首页的路由参数变化后默认是重用组件并不会重新加载数据，要使用 vue-router 的 beforeRouteUpdate() 导航守卫
+
+之前使用的是 Flask-HTTPAuth插件 实现 Base Auth和Token Auth。 但是，前端用户登录后，并不知道自己的用户 id，就没办法调用 GET /api/users/<id> 来获取自己的用户信息

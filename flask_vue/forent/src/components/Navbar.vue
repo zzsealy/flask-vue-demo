@@ -3,7 +3,7 @@
     <div class="container">
       <router-link to="/" class="navbar-brand">
         <img src="https://getbootstrap.com/docs/4.1/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-          个人博客
+          首页
       </router-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -12,7 +12,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <li class="nav-item active">
-            <router-link to="/" class="nav-link">主页 <span class="sr-only">(current)</span></router-link>
+            <router-link to="/" class="nav-link">首页 <span class="sr-only">(current)</span></router-link>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" href="#">探索</a>
@@ -30,10 +30,10 @@
             <a class="nav-link disabled" href="#">消息</a>
           </li>
           <li class="nav-item">
-            <router-link to="/profile" class="nav-link">个人</router-link>
+            <router-link v-bind:to="{ name: 'Profile', params: {id: sharedState.user_id }}" class = "nav-link"> 个人主页 </router-link>
           </li>
           <li class="nav-item">
-            <a v-on:click="handlerLogout" class="nav-link" href="#">注销</a>
+            <a v-on:click="handlerLogout" class="nav-link"> 注销 </a>
           </li>
         </ul>
         <ul v-else class="nav navbar-nav navbar-right">          

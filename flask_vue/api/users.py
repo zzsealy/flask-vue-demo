@@ -35,7 +35,7 @@ def create_user():
     response = jsonify(user.to_dict())  # 注册完，返回数据。
     response.status_code = 201
     # HTTP协议要求201响应包含一个值为新资源URL的location头部。
-    response.headers['location'] = url_for('api.get_user', id=user.id)
+    response.headers['Location'] = url_for('api.get_user', id=user.id)
     return response
 
 

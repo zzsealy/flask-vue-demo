@@ -1,30 +1,30 @@
 <template>
-  <div class="container">
+  <div style="margin: 10% 40%; border: 1px solid black; text-align: center">
     <alert 
       v-if="sharedState.is_new"
       v-bind:variant="alertVariant"
       v-bind:message="alertMessage">
     </alert>
-    <h1>Sign In</h1>
+    <h1>登陆</h1>
     <div class="row">
       <div class="col-md-4">
         <form @submit.prevent="onSubmit">
-          <div class="form-group">
+            <div style="margin-left:80%; width:200px">
             <label for="username">用户名</label>
             <input type="text" v-model="loginForm.username" class="form-control" v-bind:class="{'is-invalid': loginForm.usernameError}" id="username" placeholder="">
             <div v-show="loginForm.usernameError" class="invalid-feedback">{{ loginForm.usernameError }}</div>
-          </div>
-          <div class="form-group">
+          
+          
             <label for="password">密码</label>
             <input type="password" v-model="loginForm.password" class="form-control" v-bind:class="{'is-invalid': loginForm.passwordError}" id="password" placeholder="">
             <div v-show="loginForm.passwordError" class="invalid-feedback">{{ loginForm.passwordError }}</div>
-          </div>
-          <button type="submit" class="btn btn-primary">登陆</button>
+            </div>
+          <button type="submit" style="margin-left: 140px; width:100px; margin-top:15px" class="btn btn-primary">登陆</button>
         </form>
       </div>
     </div>
     <br>
-    <p>新用户？ <router-link to="/register">注册用户！</router-link></p>
+    <p>新用户？ <router-link to="/register">注册用户!</router-link></p>
     <p>
         忘记密码？
         <a href="#">重置密码！</a>
@@ -81,9 +81,9 @@ export default {
         return false
       }
 
-      const path = 'http://localhost:5000/api/tokens'
+      const path = '/tokens'
       // axios 实现Basic Auth需要在config中设置 auth 这个属性即可
-      axios.post(path, {}, {
+      this.$axios.post(path, {}, {
         auth: {
           'username': this.loginForm.username,
           'password': this.loginForm.password
@@ -91,8 +91,10 @@ export default {
       }).then((response) => {
           // handle success
           window.localStorage.setItem('user-token', response.data.token)
-          store.resetNotNewAction()
           store.loginAction()
+          
+          const name = JSON.parse(atob(response.data.token.split('.')[1])).name
+          this.$toasted.success(`Welcome ${name}!`, { icon: 'fingerprint' })
 
           if (typeof this.$route.query.redirect == 'undefined') {
             this.$router.push('/')
@@ -102,12 +104,7 @@ export default {
         })
         .catch((error) => {
           // handle error
-          if (error.response.status == 401) {
-            this.loginForm.usernameError = 'Invalid username or password.'
-            this.loginForm.passwordError = 'Invalid username or password.'
-          } else {
-            console.log(error.response)
-          }
+          console.log(error.response);
         })
     }
   }

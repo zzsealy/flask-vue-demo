@@ -2,7 +2,7 @@
 from flask import jsonify, g
 from flask_vue import db
 from flask_vue.api import bp
-from flask_vue.api.auth import basic_auth, token_auth
+from flask_vue.api.auth import basic_auth
 
 '''
 装饰器 @basic_auth.login_required 将指示 Flask-HTTPAuth 验证身份，
@@ -11,15 +11,9 @@ from flask_vue.api.auth import basic_auth, token_auth
 及其到期时间被写回到数据库
 '''
 @bp.route('/tokens', methods=['POST'])
-@basic_auth.login_required
+@basic_auth.login_required  # 验证账号密码
 def get_token():
-    token = g.current_user.get_token()
+    token = g.current_user.get_jwt()
     db.session.commit()
-    return jsonify({'token': token})
+    return jsonify({'token': token })
 
-@bp.route('/tokens', methods=['DELETE'])
-@token_auth.login_required
-def remove_token():
-    g.current_user.remove_token() # 先进行了remove_token, 然后调用login_required进行验证
-    db.session.commit()
-    return '',204
