@@ -3,6 +3,7 @@ from flask_vue.extends import cors, db, migrate
 from flask_vue.models import User
 from config import Config
 from flask_vue.api import bp as api_bp
+import click
 
 
 def create_app(config_class=Config):
@@ -11,8 +12,21 @@ def create_app(config_class=Config):
     register_extends(app)
     register_blueprint(app) # 注册蓝本
     register_shell_context(app)
+    register_db(app)
     return app
 
+def register_db(app):
+    @app.cli.command()
+    @click.option('--drop', is_flag=True, help='Create after drop.')
+    def initdb(drop):
+        """Initialize the database."""
+        if drop:
+            db.drop_all()
+            click.echo('删除了数据库')
+        db.create_all()
+        click.echo('创建了数据库')
+        db.session.commit()
+        
 
 def register_extends(app):
     cors.init_app(app)
