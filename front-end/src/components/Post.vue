@@ -5,7 +5,7 @@
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="updatePostModalTitle">Update Post</h5>
+            <h5 class="modal-title" id="updatePostModalTitle">更新博客</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -24,8 +24,8 @@
                 <textarea v-model="editForm.body" class="form-control" id="editform_body" rows="5" placeholder=" 内容"></textarea>
                 <small class="form-control-feedback" v-show="editForm.bodyError">{{ editForm.bodyError }}</small>
               </div>
-              <button type="reset" class="btn btn-secondary">Cancel</button>
-              <button type="submit" class="btn btn-primary">Update</button>
+              <button type="reset" class="btn btn-secondary">取消</button>
+              <button type="submit" class="btn btn-primary">更新</button>
             </form>
     
           </div>
@@ -163,8 +163,8 @@ export default {
     },
     onEditPost (post) {
       // 不要使用对象引用赋值： this.editForm = post
-      // 这样是同一个 post 对象，用户在 editform 中的操作会双向绑定到该 post 上， 你会看到 modal 下面的博客也在变
-      // 如果用户修改了一些数据，但是点了 cancel，你就必须在 onResetUpdate() 中重新加载一次博客列表，不然用户会看到修改后但未提交的不对称信息
+      // 这样是同一个 post 对象，用户在 editform 中的操作会双向绑定到该 post 上， 会看到 modal 下面的博客也在变
+      // 如果用户修改了一些数据，但是点了 cancel，必须在 onResetUpdate() 中重新加载一次博客列表，不然用户会看到修改后但未提交的不对称信息
       this.editForm = Object.assign({}, post)
     },
     onSubmitUpdate () {
@@ -229,22 +229,22 @@ export default {
       this.$toasted.info('Cancelled, the post is not update.', { icon: 'fingerprint' })
     },
     onDeletePost (post) {
-      this.$swal({
-        title: "Are you sure?",
+      this.$swal({ // 警告的样式
+        title: "你确定吗?",
         text: "该操作将彻底删除 [ " + post.title + " ], 请慎重",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!'
+        confirmButtonText: '删除！',
+        cancelButtonText: '取消！'
       }).then((result) => {
         if(result.value) {
           const path = `/api/posts/${post.id}`
           this.$axios.delete(path)
             .then((response) => {
               // handle success
-              this.$swal('Deleted', 'You successfully deleted this post', 'success')
+              this.$swal('Deleted', '删除成功', 'success')
               if (typeof this.$route.query.redirect == 'undefined') {
                 this.$router.push('/')
               } else {
@@ -257,7 +257,7 @@ export default {
             })
           
         } else {
-          this.$swal('Cancelled', 'The post is safe :)', 'error')
+          this.$swal('Cancelled', '你没有删除博客 :)', 'error')
         }
       })
     },
