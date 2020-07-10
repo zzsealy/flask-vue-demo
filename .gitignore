@@ -1,8 +1,15 @@
 .idea/
 app.db
-madblog.log*
 /.vscode/
-flask_vue/forent/node_modules
+front_end/node_modules
 /venv
 /__pycache__
 
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
