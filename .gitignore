@@ -1,7 +1,7 @@
+front-end/node_modules/
 .idea/
 app.db
 /.vscode/
-front_end/node_modules
 /venv
 /__pycache__
 
