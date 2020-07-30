@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Alert from './Alert'
+import Alert from './Base/Alert'
 
 export default {
   name: 'Ping',
@@ -43,7 +43,7 @@ export default {
       this.$axios.get(path)
         .then((res) => {
           this.msg = res.data
-          this.$toasted.info('Success connect to Flask API', { icon: 'fingerprint' })
+          this.$toasted.info('成功连接到后端Flask API', { icon: 'fingerprint' })
         })
         .catch((error) => {
           // eslint-disable-next-line

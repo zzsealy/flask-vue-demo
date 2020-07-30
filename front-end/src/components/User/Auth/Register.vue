@@ -1,26 +1,26 @@
 <template>
   <div class="container">
-    <h1>Register</h1>
+    <h1>请注册页面</h1>
     <div class="row">
       <div class="col-md-4">
         <form @submit.prevent="onSubmit">
           <div class="form-group"  v-bind:class="{'u-has-error-v1': registerForm.usernameError}" >
-            <label for="username">Username</label>
+            <label for="username">用户名</label>
             <input type="text" v-model="registerForm.username" class="form-control" id="username" placeholder="">
             <small class="form-control-feedback" v-show="registerForm.usernameError">{{ registerForm.usernameError }}</small>
           </div>
           <div class="form-group" v-bind:class="{'u-has-error-v1': registerForm.emailError}" >
-            <label for="email">Email address</label>
+            <label for="email">邮箱地址</label>
             <input type="email" v-model="registerForm.email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="">
-            <small v-if="!registerForm.emailError" id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <small v-if="!registerForm.emailError" id="emailHelp" class="form-text text-muted">我们不会告知任何人您的邮箱地址</small>
             <small class="form-control-feedback" v-show="registerForm.emailError">{{ registerForm.emailError }}</small>
           </div>
           <div class="form-group" v-bind:class="{'u-has-error-v1': registerForm.passwordError}" >
-            <label for="password">Password</label>
+            <label for="password">密码</label>
             <input type="password" v-model="registerForm.password" class="form-control" id="password" placeholder="">
             <small class="form-control-feedback" v-show="registerForm.passwordError">{{ registerForm.passwordError }}</small>
           </div>
-          <button type="submit" class="btn btn-primary">Register</button>
+          <button type="submit" class="btn btn-primary">注册</button>
         </form>
       </div>
     </div>
@@ -49,24 +49,24 @@ export default {
 
       if (!this.registerForm.username) {
         this.registerForm.errors++
-        this.registerForm.usernameError = 'Username required.'
+        this.registerForm.usernameError = '请输入用户名.'
       } else {
         this.registerForm.usernameError = null
       }
 
       if (!this.registerForm.email) {
         this.registerForm.errors++
-        this.registerForm.emailError = 'Email required.'
+        this.registerForm.emailError = '请输入邮箱.'
       } else if (!this.validEmail(this.registerForm.email)) {
         this.registerForm.errors++
-        this.registerForm.emailError = 'Valid email required.'
+        this.registerForm.emailError = '无效的邮箱地址.'
       } else {
         this.registerForm.emailError = null
       }
 
       if (!this.registerForm.password) {
         this.registerForm.errors++
-        this.registerForm.passwordError = 'Password required.'
+        this.registerForm.passwordError = '请输入密码.'
       } else {
         this.registerForm.passwordError = null
       }

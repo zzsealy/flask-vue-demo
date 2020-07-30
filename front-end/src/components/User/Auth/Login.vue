@@ -1,39 +1,40 @@
 <template>
   <div class="container">
-    <h1>Sign In</h1>
+    <h1>请登录</h1>
     <div class="row">
       <div class="col-md-4">
         <form @submit.prevent="onSubmit">
           <div class="form-group" v-bind:class="{'u-has-error-v1': loginForm.usernameError}">
-            <label for="username">Username</label>
+            <label for="username">用户名</label>
             <input type="text" v-model="loginForm.username" class="form-control" id="username" placeholder="">
             <small class="form-control-feedback" v-show="loginForm.usernameError">{{ loginForm.usernameError }}</small>
           </div>
           <div class="form-group" v-bind:class="{'u-has-error-v1': loginForm.passwordError}">
-            <label for="password">Password</label>
+            <label for="password">密码</label>
             <input type="password" v-model="loginForm.password" class="form-control" id="password" placeholder="">
             <small class="form-control-feedback" v-show="loginForm.passwordError">{{ loginForm.passwordError }}</small>
           </div>
-          <button type="submit" class="btn btn-primary">Sign In</button>
+          <button type="submit" class="btn btn-primary">登陆</button>
         </form>
       </div>
     </div>
     <br>
-    <p>New User? <router-link to="/register">Click to Register!</router-link></p>
+    <p>新用户? <router-link to="/register">点击注册!</router-link></p>
     <p>
-        Forgot Your Password?
-        <a href="#">Click to Reset It</a>
+        忘记密码?
+        <a href="#">点击重置！</a>
     </p>
   </div>
 </template>
 
 <script>
-import store from '../store'
+import store from '../../../store'
 
 export default {
   name: 'Login',  //this is the name of the component
   data () {
     return {
+      sharedState: store.state,
       loginForm: {
         username: '',
         password: '',
@@ -78,8 +79,7 @@ export default {
           window.localStorage.setItem('user-token', response.data.token)
           store.loginAction()
 
-          const name = JSON.parse(atob(response.data.token.split('.')[1])).name
-          this.$toasted.success(`Welcome ${name}!`, { icon: 'fingerprint' })
+          this.$toasted.success(`Welcome ${this.sharedState.user_name}!`, { icon: 'fingerprint' })
 
           if (typeof this.$route.query.redirect == 'undefined') {
             this.$router.push('/')
@@ -89,6 +89,8 @@ export default {
         })
         .catch((error) => {
           // handle error
+          console.log(error)
+          
           if (error.response.status == 401) {
             this.loginForm.usernameError = 'Invalid username or password.'
             this.loginForm.passwordError = 'Invalid username or password.'
